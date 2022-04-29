@@ -1,4 +1,4 @@
-[![DOI](https://zenodo.org/badge/doi/10.5281/zenodo.18914.svg)](http://dx.doi.org/10.5281/zenodo.18914)
+[![DOI]( https://doi.org/10.1101/2022.04.17.488593)]( https://doi.org/10.1101/2022.04.17.488593)
 
 # An atlas of genetic scores of omic traits
 This repository houses and documents the codes used to train genetic scores of omic traits using INTERVAL data and internally validate these scores in INTERVAL in the study Xu Y et al. An atlas of genetic scores to predict multi-omic traits, doi: 10.1101/2022.04.17.488593 (https://www.biorxiv.org/content/10.1101/2022.04.17.488593v1).
