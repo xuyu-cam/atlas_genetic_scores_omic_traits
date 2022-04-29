@@ -1,10 +1,10 @@
 # An atlas of genetic scores of omic traits
-This repository stores scripts for training genetic scores of omic traits in INTERVAL
+This repository houses and documents the codes used to train genetic scores of omic traits using INTERVAL data and internally validate these scores in INTERVAL in the study Xu Y et al. An atlas of genetic scores to predict multi-omic traits, doi: 10.1101/2022.04.17.488593 (https://www.biorxiv.org/content/10.1101/2022.04.17.488593v1).
 
 
 
 
-#The following  softwares and versions were used to perform the analyses:
+## The following  softwares and versions were used to perform the analyses:
 
 - Scientific Linux release 7.7 (Nitrogen) (HPC operating system)
 - slurm version 19.05.5 (HPC queue manager and job submission system)
