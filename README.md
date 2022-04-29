@@ -1,6 +1,6 @@
 [![DOI:10.1101/2022.04.17.488593v1](http://img.shields.io/badge/DOI-10.1101/2022.04.17.488593v1-B31B1B.svg)](https://doi.org/10.1101/2022.04.17.488593v1)
 
-[![Website shields.io](https://img.shields.io/website-up-down-green-red/http/shields.io.svg)](http://www.omicpred.org/)
+[![Website shields.io](https://img.shields.io/website-up-down-green-red/http/shields.io.svg)](http://www.omicspred.org/)
 
 # An atlas of genetic scores of omic traits
 This repository houses and documents the codes used to train genetic scores of omic traits using INTERVAL data and internally validate these scores in INTERVAL in the study Xu Y et al. An atlas of genetic scores to predict multi-omic traits, doi: 10.1101/2022.04.17.488593 (https://www.biorxiv.org/content/10.1101/2022.04.17.488593v1).
