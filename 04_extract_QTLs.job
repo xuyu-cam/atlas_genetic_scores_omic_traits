@@ -1,0 +1,49 @@
+#!/bin/bash
+
+# Make sure job is submitted directly
+if [ ! -z ${SLURM_JOB_ID+x} ]; then
+   echo "This script should be executed directly, not with sbatch."
+   exit 1
+fi
+
+# allows user to specify a job to wait for completion before running any of these scripts
+if [ ! -z "$1" ]; then
+  previous_job=$1
+else
+  previous_job=1 # run first job immediately
+fi
+
+# Create logging directory
+log_dir=logs/extract_QTLs/
+mkdir -p $log_dir
+
+# Step 1: curate list of QTLs to extract from the genotype data
+# First argument in R script is trans/genome-wide P-value threshold, (must be < 0.001)
+# and the second argument is the cis P-value threshold (use 1 if you want to include all cis SNPs)
+mkdir -p geno_files/ml_inputs
+qc_job=$(sbatch --dependency afterany:$previous_job \
+								--parsable \
+								--account INOUYE-COVID19-SL2-CPU \
+								--job-name "Extract QTLs" \
+								--time 36:0:0 \
+								-c 32 -N 1 \
+                --output $log_dir/curate_QTLs_%j.o \
+                --error $log_dir/curate_QTLs_%j.e \
+								--partition skylake-himem \
+                --wrap "Rscript scripts/04_extract_QTLs/01_extract_QTLs.R '5e-8' '5e-8'")
+
+# Step 2: extract the dosages of the effect alleles
+ex_job=$(sbatch --dependency afterok:$qc_job \
+                --parsable \
+                --account INOUYE-COVID19-SL2-CPU \
+                --job-name "Extract dosages" \
+                --partition skylake,skylake-himem \
+                --time 2:0:0 \
+                --array 1-200 \
+                --mem 10000 \
+                --output $log_dir/extract_dosages_%A_%a.o \
+                --error $log_dir/extract_dosages_%A_%a.e \
+                scripts/04_extract_QTLs/02_extract_QTL_dosages.sh)
+
+echo "Submitted jobs $qc_job, $ex_job"
+

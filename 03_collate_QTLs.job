@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# Make sure job is submitted directly
+if [ ! -z ${SLURM_JOB_ID+x} ]; then
+   echo "This script should be executed directly, not with sbatch."
+   exit 1
+fi
+
+# allows user to specify a job to wait for completion before running any of these scripts
+if [ ! -z "$1" ]; then
+  previous_job=$1
+else
+  previous_job=1 # run first job immediately
+fi
+
+# Create logging directory
+log_dir=logs/collate_QTLs
+mkdir -p $log_dir
+
+# Step 1: curate list of pQTLs to extract from the genotype data
+mkdir -p geno_files/
+sbatch --dependency afterany:$previous_job \
+       --account INOUYE-COVID19-SL2-CPU \
+       --job-name "Collate QTLs" \
+       --time 36:0:0 \
+       --output $log_dir/collate_QTLs_%j.o \
+       --error $log_dir/collate_QTLs_%j.e \
+       --partition skylake,skylake-himem \
+       --wrap "Rscript scripts/03_collate_QTLs/01_collate_QTLs.R"

@@ -1,0 +1,47 @@
+#!/bin/bash
+
+# Make sure job is submitted directly
+if [ ! -z ${SLURM_JOB_ID+x} ]; then
+   echo "This script should be executed directly, not with sbatch."
+   exit 1
+fi
+
+# allows user to specify a job to wait for completion before running any of these scripts
+if [ ! -z "$1" ]; then
+  previous_job=$1
+else
+  previous_job=1 # run first job immediately
+fi
+
+# Create logging directory
+log_dir=logs/02_ldthin/
+mkdir -p $log_dir
+
+# Step 1: identify SNPs to keep
+mkdir -p geno_files/genotype_data/ldthinned
+keep_job=$(sbatch --dependency afterany:$previous_job \
+                  --parsable \
+                  --account INOUYE-COVID19-SL2-CPU \
+                  --job-name "Identify SNPs" \
+                  --time 1:0:0 \
+                  --array 1-22 \
+                  --output $log_dir/identify_snps_%A_%a.o \
+                  --error $log_dir/identify_snps_%A_%a.e \
+                  --partition skylake \
+                  --wrap "Rscript scripts/02_ldthin/01_identify_snps.R")
+
+# Step 2: LD thin remaining SNPs at R2=0.8
+thin_job=$(sbatch --dependency afterok:$keep_job \
+                  --parsable \
+                  --account INOUYE-COVID19-SL2-CPU \
+                  --job-name "LDthin" \
+                  --array 1-22 \
+                  --time 3:0:0 \
+                  --mem 10000 \
+                  --output $log_dir/ldthin_%A_%a.o \
+                  --error $log_dir/ldthin_%A_%a.e \
+                  --partition skylake \
+                  scripts/02_ldthin/02_ldthin.sh)
+
+echo "Submitted jobs $keep_job, $thin_job"
+

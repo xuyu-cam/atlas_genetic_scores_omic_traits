@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# Make sure job is submitted directly
+if [ ! -z ${SLURM_JOB_ID+x} ]; then
+   echo "This script should be executed directly, not with sbatch."
+   exit 1
+fi
+
+
+# Create logging directory
+log_dir=logs/06_omics_ukb_phecode_disease_assoc_test/
+mkdir -p $log_dir
+
+
+#submit an array job for association scan of a given phecode in UKB across all omics traits of the 5 platforms
+#the first argument is the phecode file 
+asso_test_job=$(sbatch  --parsable \
+                  --account INOUYE-SL3-CPU \
+                  --job-name "ass_test" \
+                  --array 1-5 \
+                  --time 12:0:0 \
+                  --mem 36000 \
+                  --output $log_dir/omics_${1}_assoc_tests_%A_%a.o \
+                  --error $log_dir/omics_${1}_assoc_tests_%A_%a.e \
+                  --partition cclake-himem,skylake-himem,skylake,cclake \
+                  scripts/06_all_omics_UKB_phecode_assoc_test/01_all_omics_PGS_UKB_disease_assoc.sh ${1})
+
+echo "Submitted jobs ${asso_test_job}"
+

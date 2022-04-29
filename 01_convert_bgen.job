@@ -1,0 +1,78 @@
+#!/bin/bash
+
+# Make sure job is submitted directly
+if [ ! -z ${SLURM_JOB_ID+x} ]; then
+   echo "This script should be executed directly, not with sbatch."
+   exit 1
+fi
+
+# allows user to specify a job to wait for completion before running any of these scripts
+if [ ! -z "$1" ]; then
+  previous_job=$1
+else
+  previous_job=1 # run first job immediately
+fi
+
+# Create logging directory
+log_dir=logs/01_convert_bgen/
+mkdir -p $log_dir
+
+# Step 1: convert the BGEN files to plink pgen/pvar/pfam files.
+# These maintain the probabilistic dosage information, while also
+# separating the variant information into a separate file, allowing
+# us to fix the non-unique variant identifiers (all variants without
+# an rsID are given identifier ".")
+mkdir -p geno_files/genotype_data/
+conv_job=$(sbatch --dependency afterany:$previous_job \
+                  --parsable \
+                  --account INOUYE-COVID19-SL2-CPU \
+                  --job-name "Convert bgen" \
+                  --time 1:0:0 \
+                  --array 1-22 \
+                  --mem 36000 \
+                  --output $log_dir/convert_bgen_%A_%a.o \
+                  --error $log_dir/convert_bgen_%A_%a.e \
+                  --partition skylake \
+                  scripts/01_convert_bgen/01_convert_bgen.sh)
+
+# Step 2: Give variants unique identifiers and flag duplicates 
+# for removal
+flag_job=$(sbatch --dependency afterok:$conv_job \
+                  --parsable \
+                  --account INOUYE-COVID19-SL2-CPU \
+                  --job-name "Flag duplicates" \
+                  --time 3:0:0 \
+                  --mem 12000 \
+                  --output $log_dir/flag_duplicates_%j.o \
+                  --error $log_dir/flag_duplicates_%j.e \
+                  --partition skylake \
+                  --wrap "Rscript scripts/01_convert_bgen/02_flag_duplicates.R")
+
+# Step 3: Remove the variants flagged for removal
+rmdp_job=$(sbatch --dependency afterany:$flag_job \
+                  --parsable \
+                  --account INOUYE-COVID19-SL2-CPU \
+                  --job-name "Remove duplicates" \
+                  --time 1:0:0 \
+                  --array 1-22 \
+                  --mem 6000 \
+                  --output $log_dir/remove_duplicates_%A_%a.o \
+                  --error $log_dir/remove_duplicates_%A_%a.e \
+                  --partition skylake \
+                  scripts/01_convert_bgen/03_filter_duplicates.sh)
+
+# Step 4: Remove the extra crud in the variant identifiers now that
+# the deduplication process has happened.
+fvid_job=$(sbatch --dependency afterok:$rmdp_job \
+                  --parsable \
+                  --account INOUYE-COVID19-SL2-CPU \
+                  --job-name "Fix variant IDs" \
+                  --time 1:0:0 \
+                  --mem 8192 \
+                  --output $log_dir/fix_var_ids_%j.o \
+                  --error $log_dir/fix_var_ids_%j.e \
+                  --partition skylake \
+                  --wrap "Rscript scripts/01_convert_bgen/04_fix_var_ids.R")
+
+echo "Submitted jobs $conv_job, $flag_job, $rmdp_job, $fvid_job"
+
