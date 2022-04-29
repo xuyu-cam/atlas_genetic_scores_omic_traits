@@ -1,4 +1,4 @@
-[![DOI:10.1101/2022.04.17.488593v1](http://img.shields.io/badge/DOI-10.1101/2022.04.17.488593v1-B31B1B.svg)](https://doi.org/10.1101/2022.04.17.488593v1)
+[![DOI:10.1101/2022.04.17.488593v1](http://img.shields.io/badge/DOI-10.1101/2022.04.17.488593v1-B31B1B.svg)](https://www.biorxiv.org/content/10.1101/2022.04.17.488593v1)
 
 [![Website shields.io](https://img.shields.io/website-up-down-green-red/http/shields.io.svg)](http://www.omicspred.org/)
 
