@@ -1,7 +1,7 @@
 # Codes for using SbayesS to estimate heritability of omics traits
 
-## Software Version 
-- GCTB 2.02 [![Website shields.io](https://img.shields.io/website-up-down-green-red/http/shields.io.svg)](https://cnsgenomics.com/software/gctb/#Download)
+- Software Version 
+  - GCTB 2.02 [![Website shields.io](https://img.shields.io/website-up-down-green-red/http/shields.io.svg)](https://cnsgenomics.com/software/gctb/#Download)
 
 - Variants used to construct the correlation matrix
   - Hapmap3 variant set
@@ -10,6 +10,8 @@
   - imputation info score < 0.3
   - MAF > 0.01
 
+- Samples used to contruct the correlation matrix
+   - All QCed INTERVAL smaples excluding these used in withheld set validation
 
 
 
