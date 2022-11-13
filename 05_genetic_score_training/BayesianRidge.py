@@ -40,7 +40,7 @@ def full_fit_BayesianRidge(x_train, x_test, y_train, y_test, alpha_1, alpha_2, l
 #Grid search on (1e10, 1e5, 1e1, 0, -1e1, -1e5, -1e10)
 #return the best 'alpha_1', 'alpha_2' 'lambda_1' 'lambda_2'
 def full_fit_BayesianRidge_para_turing(x_train, x_val, y_train, y_val,para_file):
-    nums = (1e10, 1e5, 1e3, 1e1, 0, -1e1, -1e3,-1e5,-1e10)
+    nums = (1e10, 1e5, 1e3, 1e1, 0, 1e-1, 1e-3,1e-5,1e-10)
     f=open(para_file,'w')
     alpha_1 = nums
     alpha_2 = nums
