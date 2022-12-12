@@ -50,8 +50,9 @@ All genetic score models trained in the study, and their internal as well as ext
    - **03_collate_QTLs**: curate the list of QTLs infomration needed for variant selection from GWAS summary statistics;
    - **04_extract_QTLs**: select the list QTLs with given p-value thresholds, and extract their dosages of the effect alleles as input data of Bayesian Ridge;
    - **05_genetic_score_training**: training genetic score models using Bayesian ridge;
-   - **06_all_omics_UKB_phecode_assoc_test**: perform PheWAS with the genetic scores of omics traits in UK Biobank
+   
 
 - Others: 
+   - **06_all_omics_UKB_phecode_assoc_test**: perform PheWAS with the genetic scores of omics traits in UK Biobank
    - **GCTB**: scripts attempted to use SbayesS to estimate heritability of omics traits
    - **LDpred2**:
