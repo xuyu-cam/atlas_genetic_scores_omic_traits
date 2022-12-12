@@ -55,4 +55,4 @@ All genetic score models trained in the study, and their internal as well as ext
 - Others: 
    - **06_all_omics_UKB_phecode_assoc_test**: perform PheWAS with the genetic scores of omics traits in UK Biobank
    - **GCTB**: scripts attempted to use SbayesS to estimate heritability of omics traits
-   - **LDpred2**:
+   - **LDpred2**: Scripts used to develop genetic scores of omic traits using LDpred2-auto.
