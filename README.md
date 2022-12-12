@@ -41,15 +41,15 @@ All genetic score models trained in the study, and their internal as well as ext
   - stringr version 1.4.0
   - tibble version 3.1.0
 
-## Descriptions of scripts under each sub-fold:
+## Description of scripts in each sub-folder:
 
-- 01_convert_bgen: convert genotype data from bgen to Plink pgen format and remove duplacate variants;
-- 02_ldthin: remove multi-allelic, ambiguous (A/T, G/G) variants and variants with a MAF < 0.5%, and ld-thin variants with r2=0.8 (i.e. indep-pairwise 1000kb 0.8 in plink2);
-- 03_collate_QTLs: curate the list of QTLs infomration needed from  GWAS summary statistics;
-- 04_extract_QTLs: select the list QTLs with given p-value thresholds, and extract their dosages of the effect alleles as input data of Bayesian Ridge;
-- 05_genetic_score_training: training genetic score models using Bayesian ridge;
-- 06_all_omics_UKB_phecode_assoc_test: perform PheWAS with the genetic scores of omics traits in UK Biobank
+- **01_convert_bgen**: convert genotype data from bgen to Plink pgen format and remove duplacate variants;
+- **02_ldthin**: remove multi-allelic, ambiguous (A/T, G/G) variants and variants with a MAF < 0.5%, and ld-thin variants with r2=0.8 (i.e. indep-pairwise 1000kb 0.8 in plink2);
+- **03_collate_QTLs**: curate the list of QTLs infomration needed from GWAS summary statistics;
+- **04_extract_QTLs**: select the list QTLs with given p-value thresholds, and extract their dosages of the effect alleles as input data of Bayesian Ridge;
+- **05_genetic_score_training**: training genetic score models using Bayesian ridge;
+- **06_all_omics_UKB_phecode_assoc_test**: perform PheWAS with the genetic scores of omics traits in UK Biobank
 
-- GCTB: scripts attempted to use SbayesS to estimate heritability of omics traits
+- **GCTB**: scripts attempted to use SbayesS to estimate heritability of omics traits
 
-- LDpred2
+- **LDpred2**:
