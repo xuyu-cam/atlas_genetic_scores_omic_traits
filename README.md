@@ -3,7 +3,7 @@
 [![Website shields.io](https://img.shields.io/website-up-down-green-red/http/shields.io.svg)](http://www.omicspred.org/)
 
 # An atlas of genetic scores to predict multi-omic traits
-This repository houses and documents the codes used to train genetic scores of omic traits using INTERVAL data and internally validate these scores in the study: Xu Y et al. An atlas of genetic scores to predict multi-omic traits. Nature (2023) https://doi.org/10.1038/s41586-023-05844-9 ([https://www.nature.com/articles/s41586-023-05844-9](https://www.nature.com/articles/s41586-023-05844-9)).
+This repository houses and documents the codes used to train genetic scores of omic traits using INTERVAL data and internally validate these scores in the study: Xu Y et al. An atlas of genetic scores to predict multi-omic traits. Nature (2023) https://doi.org/10.1038/s41586-023-05844-9.
 
 All genetic score models trained in the study, and their internal as well as external validation results were all deposited in a cloud service (boxing.com) and are publicly accessible through our online portal (www.omicspred.org).
 
