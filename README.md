@@ -1,4 +1,4 @@
-[![DOI:10.1038/s41586-023-05844-9](http://img.shields.io/badge/DOI-10.1038/s41586-023-05844-9-B31B1B.svg)](https://www.nature.com/articles/s41586-023-05844-9)
+[![DOI:10.1038/s41586-023-05844-9](https://img.shields.io/badge/DOI%3A-10.1038%2Fs41586--023--05844--9-orange)](https://www.nature.com/articles/s41586-023-05844-9)
 
 [![Website shields.io](https://img.shields.io/website-up-down-green-red/http/shields.io.svg)](http://www.omicspred.org/)
 
